@@ -13,54 +13,7 @@
         <script 
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
         </script>
-        <script>
-            $(document).ready(function() {
-                $("form").submit(function() {
-                    //gathers values from the form
-                    var notes = $.trim($("textarea").val());
-                    var flavor = $("input[name='flavor']:checked").val();
-                    var quantity = $("select").find(":selected").text();
-
-                    //check if the user typed up the word vegan anywhere in the text area.
-                    if (notes.search(/vegan/i) > -1){
-                        alert("Sorry, but our cheesecakes contain dairy! :(");
-                    }
-                    else {
-                        //users are required to choose a flavor
-                        if (!flavor){
-                            alert("Please select a flavor!");
-                        }
-                        else{
-                            /*
-                                removes the form element and replaces it with 
-                                a thank-you text that describes the order details
-                            */
-                            $("form").remove();
-                            if (!notes){
-                                notes = "none";
-                            }
-                            $("div.form").css("padding","55px 40px")
-                            var thankYou = $("<p></p>").text("Thank you! Your order has been placed.")
-                                            .css({"color":"blue", "text-align": "center","font-size":"24px","font-weight":"bold"});
-                            var orderDetails = $("<p></p>").text("You have ordered " + quantity + " " + flavor + " cheesecake(s).")
-                                            .css({"color":"blue", "text-align": "center","font-size":"24px","font-weight":"bold"});
-                            var specialRequests = $("<p></p>").text("Special requests: " + notes)
-                                            .css({"color":"blue", "text-align": "center","font-size":"24px","font-weight":"bold"});
-                            $("div.form").append(thankYou, orderDetails, specialRequests);
-                        }
-                    }
-                });
-                //changes the text in the widget to the selected month and toggles dropdown visibility
-                $(".month-dropdown").mouseenter(function(){
-                    $(".month-select").show();
-                });
-                $(".month-select a").click(function(){
-                    var month = $(this).attr('title');
-                    $(".dropbtn").html(month);
-                    $(".month-select").hide();
-                });
-            });
-        </script>
+        <script src="javascripts/ananda23_cheesecake.js"></script>
     </head>
     <body>
         <!--sets up header of website-->
