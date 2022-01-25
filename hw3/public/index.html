@@ -1,0 +1,139 @@
+<!--
+    Designed by Aashish Anand
+    CS 341 HW2
+    Date: 1/17/2022
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="stylesheets/ananda23.css">
+        <title>Say Cheesecake</title>
+        <script 
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+        </script>
+        <script>
+            $(document).ready(function() {
+                $("form").submit(function() {
+                    //gathers values from the form
+                    var notes = $.trim($("textarea").val());
+                    var flavor = $("input[name='flavor']:checked").val();
+                    var quantity = $("select").find(":selected").text();
+
+                    //check if the user typed up the word vegan anywhere in the text area.
+                    if (notes.search(/vegan/i) > -1){
+                        alert("Sorry, but our cheesecakes contain dairy! :(");
+                    }
+                    else {
+                        //users are required to choose a flavor
+                        if (!flavor){
+                            alert("Please select a flavor!");
+                        }
+                        else{
+                            /*
+                                removes the form element and replaces it with 
+                                a thank-you text that describes the order details
+                            */
+                            $("form").remove();
+                            if (!notes){
+                                notes = "none";
+                            }
+                            $("div.form").css("padding","55px 40px")
+                            var thankYou = $("<p></p>").text("Thank you! Your order has been placed.")
+                                            .css({"color":"blue", "text-align": "center","font-size":"24px","font-weight":"bold"});
+                            var orderDetails = $("<p></p>").text("You have ordered " + quantity + " " + flavor + " cheesecake(s).")
+                                            .css({"color":"blue", "text-align": "center","font-size":"24px","font-weight":"bold"});
+                            var specialRequests = $("<p></p>").text("Special requests: " + notes)
+                                            .css({"color":"blue", "text-align": "center","font-size":"24px","font-weight":"bold"});
+                            $("div.form").append(thankYou, orderDetails, specialRequests);
+                        }
+                    }
+                });
+                //changes the text in the widget to the selected month and toggles dropdown visibility
+                $(".month-dropdown").mouseenter(function(){
+                    $(".month-select").show();
+                });
+                $(".month-select a").click(function(){
+                    var month = $(this).attr('title');
+                    $(".dropbtn").html(month);
+                    $(".month-select").hide();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <!--sets up header of website-->
+        <div class="header">
+            <h1 id="Title">Cheesecake Order Form</h1>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Cheesecake_mit_Beeren.jpg/240px-Cheesecake_mit_Beeren.jpg" 
+            alt="New York Cheesecake">
+        </div>
+        <!--sets up the form that customizes user options for cheesecake-->
+        <div class="form">
+            <form>
+                <table>
+                    <tr>
+                        <th>Quantity</th>
+                        <th>Topping</th>
+                    </tr>
+                    <tr>
+                        <!--dropdown selector that chooses the quantity of cheesecakes-->
+                        <td class="selector">
+                            <select>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                        <!--Radio buttons choose flavor of cheesecakes-->
+                        <td>
+                            <input type="radio" id="plain" name="flavor" value="plain">
+                            <label for="plain" class="plain">Plain</label><br>
+                            <input type="radio" id="cherry" name="flavor" value="cherry">
+                            <label for="cherry" class="cherry">Cherry</label><br>
+                            <input type="radio" id="chocolate" name="flavor" value="chocolate">
+                            <label for="chocolate" class="chocolate">Chocolate</label><br>
+                        </td>
+                    </tr>
+                </table>
+                <!--text area set up for any special requests by user-->
+                <section class="feedback">
+                    <label for="notes" class="notes">Notes:</label><br>
+                    <textarea id="notes" name="notes" rows=5 cols=45 placeholder="Enter any special instructions here."></textarea><br>
+                    <br>
+                    <input type="submit" value="Order">
+                </section>
+            </form>
+        </div>
+        <!--sets up div element that displays the order numbers by month-->
+        <div class="pastorder">
+            <h2>Orders for 
+                <div class="month-dropdown">
+                    <button class="dropbtn">Jan</button>
+                    <div class="month-select">
+                        <a title="Jan">Jan</a>
+                        <a title="Feb">Feb</a>
+                        <a title="Mar">Mar</a>
+                        <a title="Apr">Apr</a>
+                        <a title="May">May</a>
+                        <a title="Jun">Jun</a>
+                        <a title="Jul">Jul</a>
+                        <a title="Aug">Aug</a>
+                        <a title="Sep">Sep</a>
+                        <a title="Oct">Oct</a>
+                        <a title="Nov">Nov</a>
+                        <a title="Dec">Dec</a>
+                    </div>
+                </div>
+            </h2>
+            <ul>
+                <li class="cherry">11 cherry</li>
+                <li class="chocolate">17 chocolate</li>
+                <li class="plain">31 plain</li>
+            </ul>
+        </div>
+    </body>
+</html>
