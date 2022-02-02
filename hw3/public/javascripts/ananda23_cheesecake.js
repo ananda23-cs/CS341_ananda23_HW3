@@ -49,6 +49,11 @@ function dropdownMonthMenu() {
         var month = $(this).attr('title');
         $(".dropbtn").html(month);
         $(".month-select").hide();
+        $.post("/orders", { "selectedMonth" : month }, function(req, res, next){
+            $("#cherry-li").text(req["orderData"][0].quantity + " " + req["orderData"][0].topping);
+            $("#chocolate-li").text(req["orderData"][1].quantity + " " + req["orderData"][1].topping);
+            $("#plain-li").text(req["orderData"][2].quantity + " " + req["orderData"][2].topping);
+        });
     });
 }
 
