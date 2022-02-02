@@ -3,6 +3,7 @@
  * Should run the same scripts as HW2
  * Designed by Aashish Anand
  * Date Created: 1/25/2022
+ * Revised: 2/1/2022
  */
 $(document).ready(function() {
     $("form").submit(function() {
@@ -49,10 +50,12 @@ function dropdownMonthMenu() {
         var month = $(this).attr('title');
         $(".dropbtn").html(month);
         $(".month-select").hide();
+
+        //issuing a post request for the dropdown menu everytime a month is selected
         $.post("/orders", { "selectedMonth" : month }, function(req, res, next){
-            $("#cherry-li").text(req["orderData"][0].quantity + " " + req["orderData"][0].topping);
-            $("#chocolate-li").text(req["orderData"][1].quantity + " " + req["orderData"][1].topping);
-            $("#plain-li").text(req["orderData"][2].quantity + " " + req["orderData"][2].topping);
+            $("#cherry-li").text(req.orderData[0].quantity + " " + req.orderData[0].topping);
+            $("#chocolate-li").text(req.orderData[1].quantity + " " + req.orderData[1].topping);
+            $("#plain-li").text(req.orderData[2].quantity + " " + req.orderData[2].topping);
         });
     });
 }

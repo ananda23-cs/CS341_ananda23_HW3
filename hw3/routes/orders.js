@@ -1,4 +1,10 @@
-//JSON array that gives past orders
+/**
+ * Created By Aashish Anand
+ * orders.js: meant to handle get and post requests from client side
+ * Date created: 2/1/2022
+ */
+
+//JSON array that gives hard-coded values of topping and quantity
 const orderArray = {
     "orderData": 
     [
