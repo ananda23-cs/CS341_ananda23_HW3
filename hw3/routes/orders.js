@@ -3,29 +3,28 @@
  * orders.js: meant to handle get and post requests from client side
  * Date created: 2/1/2022
  */
+var express = require('express');
+var router = express.Router();
+var dbms = require('./dbms');
 
 //JSON array that gives hard-coded values of topping and quantity
-const orderArray = {
+var orderArray = {
     "orderData": 
     [
         {
-            topping: "cherry", 
+            topping: "Cherry", 
             quantity: 3
         }, 
         {
-            topping: "chocolate", 
+            topping: "Chocolate", 
             quantity: 5
         }, 
         {
-            topping: "plain", 
+            topping: "Plain", 
             quantity: 2
         }
     ]
 };
-
-var express = require('express');
-var router = express.Router();
-var dbms = require('./dbms_promise');
 
 /* GET orders data: hard-coded at the moment */
 router.get('/', function(req, res, next) {
@@ -35,12 +34,31 @@ router.get('/', function(req, res, next) {
 /* Handling POST request for orderArray */
 router.post('/', function(req, res, next) {
     //using dbms to handle real-time POST request
-    var promiseCherry = dbms.dbquery("SELECT SUM(QUANTITY) FROM ORDERS WHERE MONTH='" + req.body.selectedMonth + "' AND TOPPING='Cherry';");
-    var promiseChocolate = dbms.dbquery("SELECT SUM(QUANTITY) FROM ORDERS WHERE MONTH='" + req.body.selectedMonth + "' AND TOPPING='Chocolate';");
-    var promisePlain = dbms.dbquery("SELECT SUM(QUANTITY) FROM ORDERS WHERE MONTH='" + req.body.selectedMonth + "' AND TOPPING='Plain';");
-    promiseCherry.then((cherry) => orderArray.orderData[0].quantity = cherry[0]).catch(orderArray.orderData[0].quantity = 0);
-    promiseChocolate.then((chocolate) => orderArray.orderData[1].quantity = chocolate[0]).catch(orderArray.orderData[1].quantity = 0);
-    promisePlain.then((plain) => orderArray.orderData[2].quantity = plain[0]).catch(orderArray.orderData[2].quantity = 0);
+    //console.log(req.body.selectedMonth);
+    dbms.dbquery("SELECT SUM(QUANTITY) AS CherryNum FROM ORDERS WHERE MONTH='" + req.body.selectedMonth + "' AND TOPPING='Cherry';",
+        function(err, result) {
+            if(result[0]["CherryNum"])
+                orderArray.orderData[0].quantity = result[0]["CherryNum"];
+            else
+                orderArray.orderData[0].quantity = 0;
+        } 
+    );
+    dbms.dbquery("SELECT SUM(QUANTITY) AS ChocoNum FROM ORDERS WHERE MONTH='" + req.body.selectedMonth + "' AND TOPPING='Chocolate';",
+        function(err, result) {
+            if(result[0]["ChocoNum"])
+                orderArray.orderData[1].quantity = result[0]["ChocoNum"];
+            else
+                orderArray.orderData[1].quantity = 0;
+        } 
+    );
+    dbms.dbquery("SELECT SUM(QUANTITY) AS PlainNum FROM ORDERS WHERE MONTH='" + req.body.selectedMonth + "' AND TOPPING='Plain';",
+        function(err, result) {
+            if(result[0]["PlainNum"])
+                orderArray.orderData[2].quantity = result[0]["PlainNum"];
+            else
+                orderArray.orderData[2].quantity = 0;
+        } 
+    );
     res.json(orderArray);
 })
 
