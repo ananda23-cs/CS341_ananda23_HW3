@@ -34,6 +34,9 @@ $(document).ready(function() {
                 var specialRequests = $("<p></p>").text("Special requests: " + notes);
                 stylizeThankYou(thankYou, orderDetails, specialRequests);
                 $("div.form").append(thankYou, orderDetails, specialRequests);
+
+                var newOrderData = {"quantity": quantity, "flavor": flavor, "notes": notes};
+                $.post("/neworder", newOrderData);
             }
         }
     });
