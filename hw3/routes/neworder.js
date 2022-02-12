@@ -10,15 +10,15 @@ router.post('/', function (req, res, next){
     var newQuantity = req.body.quantity;
     var newFlavor = req.body.flavor;
     var newNotes = req.body.notes;
-    var newOrderID = 0;
     dbms.dbquery("SELECT MAX(ORDERID) FROM ORDERS;", 
         function (err,res){
-            newOrderID += res[0]["MAX(ORDERID)"] + 1;
+            var newOrderID = res[0]["MAX(ORDERID)"] + 1;
             console.log("Processing new order ID #" + newOrderID);
+            console.log(newQuantity, newFlavor, newNotes);
+            dbms.dbquery("INSERT INTO ORDERS (ORDERID, MONTH, DAY, QUANTITY, TOPPING, NOTES) VALUES (" + newOrderID + ", '" + month + "', " + day + ", " + newQuantity + ", '" + newFlavor + "', '" + newNotes + "');", null);
         }
+        
     );
-    console.log(newQuantity, newFlavor, newNotes);
-    dbms.dbquery("INSERT INTO ORDERS (ORDERID, MONTH, DAY, QUANTITY, TOPPING, NOTES) VALUES (" + newOrderID + ", '" + month + "', " + day + ", " + newQuantity + ", '" + newFlavor + "', '" + newNotes + "');");
 });
 
 module.exports = router;
