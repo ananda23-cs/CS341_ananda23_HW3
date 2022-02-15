@@ -56,9 +56,9 @@ function dropdownMonthMenu() {
 
         //issuing a post request for the dropdown menu everytime a month is selected
         $.post("/orders", { "selectedMonth" : month }, function(req, res, next){
-            $("#cherry-li").text(req.orderData[0].quantity + " " + req.orderData[0].topping);
-            $("#chocolate-li").text(req.orderData[1].quantity + " " + req.orderData[1].topping);
-            $("#plain-li").text(req.orderData[2].quantity + " " + req.orderData[2].topping);
+            $("#cherry-li").text(req.orderData[0].quantity + " cherry");
+            $("#chocolate-li").text(req.orderData[1].quantity + " chocolate");
+            $("#plain-li").text(req.orderData[2].quantity + " plain");
         });
     });
 }
