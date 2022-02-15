@@ -5,8 +5,7 @@
  */
 var express = require('express');
 var router = express.Router();
-//var dbms = require('./dbms');
-var dbms = require('./dbms_local'); //For debugging purposes only
+var dbms = require('./dbms');
 
 const now = new Date();
 

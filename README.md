@@ -3,4 +3,4 @@ This is a repository containing my developed software for the Cheesecake app for
 
 Written by Aashish Anand
 
-*P.S. Click on same month twice to get the true value from the database*
+*P.S. Wait for approximately 2 seconds before changing the month in the dropdown menu to obtain the appropriate data*
